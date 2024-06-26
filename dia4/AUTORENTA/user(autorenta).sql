@@ -19,8 +19,8 @@ GRANT EXECUTE ON PROCEDURE AutoRental.registrar_cliente TO 'empleado'@'localhost
 GRANT EXECUTE ON PROCEDURE AutoRental.actualizar_cliente TO 'empleado'@'localhost';
 
 -- Permisos para el usuario 'director'
-GRANT EXECUTE ON PROCEDURE AutoRental.registrar_empleado TO 'director'@'localhost';
-GRANT EXECUTE ON PROCEDURE AutoRental.actualizar_empleado TO 'director'@'localhost';
+GRANT EXECUTE ON PROCEDURE AutoRental.registrar_empleado TO 'administrador'@'localhost';
+GRANT EXECUTE ON PROCEDURE AutoRental.actualizar_empleado TO 'administrador'@'localhost';
 
 -- Mostrar permisos del usuario 'cliente'
 SHOW GRANTS FOR 'cliente'@'localhost';
