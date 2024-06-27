@@ -100,9 +100,9 @@ select * from Vehiculo where id_vehiculo = 101;
 -- procedimientos administrador
 -- Registrar Empleado
 -- Aqui en administrador prodar registrar a un nuevo dato de algun empleado
+-- este procedimiento tambien usa el trigger para asignar la sucursal de manera automatica
 delimiter //
 create procedure registrar_empleado (
-    in p_id_sucursal int,
     in p_cedula varchar(20),
     in p_nombre varchar(100),
     in p_apellido1 varchar(100),
@@ -113,11 +113,12 @@ create procedure registrar_empleado (
     in p_correo_electronico varchar(100)
 )
 begin
-    insert into Empleado (id_sucursal, cedula, nombre, apellido1, apellido2, direccion, ciudad_residencia, celular, correo_electronico)
-    values (p_id_sucursal, p_cedula, p_nombre, p_apellido1, p_apellido2, p_direccion, p_ciudad_residencia, p_celular, p_correo_electronico);
+    insert into Empleado (cedula, nombre, apellido1, apellido2, direccion, ciudad_residencia, celular, correo_electronico)
+    values (p_cedula, p_nombre, p_apellido1, p_apellido2, p_direccion, p_ciudad_residencia, p_celular, p_correo_electronico);
 end //
 delimiter ;
-call registrar_empleado(1, '1234567890', 'Juan', 'Pérez', 'González', 'calle 123 #45-67', 'Bogotá', '3007654321', 'juan.perez@autorenta.com');
+
+CALL registrar_empleado('21544621', 'pepito', 'alcachofa', 'ramirez', 'nose', 'cucuta', '1231123', 'pepito@autorenta.com');
 select * from Empleado where id_sucursal = 1;
 
 -- Actualizar Empleado
