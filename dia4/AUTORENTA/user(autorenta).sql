@@ -1,26 +1,23 @@
 use autorenta;
 
 -- Crear usuarios
-CREATE USER 'empleado'@'localhost' IDENTIFIED BY 'empleado123';
-CREATE USER 'administrador'@'localhost' IDENTIFIED BY 'administrador123';
-CREATE USER 'cliente'@'localhost' IDENTIFIED BY 'cliente123';
+create user 'empleado'@'localhost' identified  by 'empleado123';
+create user 'cliente'@'localhost' identified  by 'cliente123';
 
 -- Permisos para el usuario 'cliente'
-GRANT EXECUTE ON FUNCTION AutoRental.historial_alquileres TO 'cliente'@'localhost';
-GRANT EXECUTE ON PROCEDURE AutoRental.registrar_alquiler TO 'cliente'@'localhost';
-GRANT EXECUTE ON PROCEDURE AutoRental.consultar_vehiculos TO 'cliente'@'localhost';
+grant execute on function autorenta.historial_alquileres to 'cliente'@'localhost';
+grant execute on procedure autorenta.registrar_alquiler to 'cliente'@'localhost';
+grant execute on procedure autorenta.consultar_disponibilidad_vehiculos to 'cliente'@'localhost';
 
 -- Permisos para el usuario 'empleado'
-GRANT EXECUTE ON PROCEDURE AutoRental.insertar_sucursal TO 'empleado'@'localhost';
-GRANT EXECUTE ON PROCEDURE AutoRental.actualizar_sucursal TO 'empleado'@'localhost';
-GRANT EXECUTE ON PROCEDURE AutoRental.registrar_vehiculo TO 'empleado'@'localhost';
-GRANT EXECUTE ON PROCEDURE AutoRental.actualizar_vehiculo TO 'empleado'@'localhost';
-GRANT EXECUTE ON PROCEDURE AutoRental.registrar_cliente TO 'empleado'@'localhost';
-GRANT EXECUTE ON PROCEDURE AutoRental.actualizar_cliente TO 'empleado'@'localhost';
-
--- Permisos para el usuario 'director'
-GRANT EXECUTE ON PROCEDURE AutoRental.registrar_empleado TO 'administrador'@'localhost';
-GRANT EXECUTE ON PROCEDURE AutoRental.actualizar_empleado TO 'administrador'@'localhost';
+grant execute on procedure autorenta.insertar_sucursal to 'empleado'@'localhost';
+grant execute on procedure autorenta.actualizar_sucursal to 'empleado'@'localhost';
+grant execute on procedure autorenta.registrar_vehiculo to 'empleado'@'localhost';
+grant execute on procedure autorenta.actualizar_vehiculo to 'empleado'@'localhost';
+grant execute on procedure autorenta.registrar_empleado to 'empleado'@'localhost';
+grant execute on procedure autorenta.actualizar_empleado to 'empleado'@'localhost';
 
 -- Mostrar permisos del usuario 'cliente'
-SHOW GRANTS FOR 'cliente'@'localhost';
+show grants for 'administrador'@'localhost';
+
+flush privileges;
