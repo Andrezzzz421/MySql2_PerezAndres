@@ -1,79 +1,88 @@
 use autorenta;
 
--- procedimientos sucursales
--- Insertar Sucursal
-DELIMITER //
-CREATE PROCEDURE insertar_sucursal (
-    IN p_ciudad VARCHAR(100),
-    IN p_direccion VARCHAR(200),
-    IN p_telefono_fijo VARCHAR(20),
-    IN p_celular VARCHAR(20),
-    IN p_correo_electronico VARCHAR(100)
+-- procedimientos empleado
+-- insertar Sucursal
+-- aqui el empleado podra agregar una surcursal nueva
+delimiter //
+create procedure insertar_sucursal (
+    in p_ciudad varchar(100),
+    in p_direccion varchar(200),
+    in p_telefono_fijo varchar(20),
+    in p_celular varchar(20),
+    in p_correo_electronico varchar(100)
 )
-BEGIN
-    INSERT INTO Sucursal (ciudad, direccion, telefono_fijo, celular, correo_electronico)
-    VALUES (p_ciudad, p_direccion, p_telefono_fijo, p_celular, p_correo_electronico);
-END //
-DELIMITER ;
+begin
+    insert into Sucursal (ciudad, direccion, telefono_fijo, celular, correo_electronico)
+    values (p_ciudad, p_direccion, p_telefono_fijo, p_celular, p_correo_electronico);
+end //
+delimiter ;
+call insertar_sucursal('Bogotá', 'Av. Siempre Viva 123', '1234567', '3001234567', 'bogota@autorenta.com');
+select * from Sucursal;
 
 -- Actualizar Sucursal
-DELIMITER //
-CREATE PROCEDURE actualizar_sucursal (
-    IN p_id_sucursal INT,
-    IN p_ciudad VARCHAR(100),
-    IN p_direccion VARCHAR(200),
-    IN p_telefono_fijo VARCHAR(20),
-    IN p_celular VARCHAR(20),
-    IN p_correo_electronico VARCHAR(100)
+-- aqui el empleado podra actualizar una surcursal nueva
+
+delimiter //
+create procedure actualizar_sucursal (
+    in p_id_sucursal int,
+    in p_ciudad varchar(100),
+    in p_direccion varchar(200),
+    in p_telefono_fijo varchar(20),
+    in p_celular varchar(20),
+    in p_correo_electronico varchar(100)
 )
-BEGIN
-    UPDATE Sucursal
-    SET ciudad = p_ciudad,
+begin
+    update Sucursal
+    set ciudad = p_ciudad,
         direccion = p_direccion,
         telefono_fijo = p_telefono_fijo,
         celular = p_celular,
         correo_electronico = p_correo_electronico
-    WHERE id_sucursal = p_id_sucursal;
-END //
-DELIMITER ;
+    where id_sucursal = p_id_sucursal;
+end //
+delimiter ;
+call actualizar_sucursal(6, 'cucuta', 'calle Falsa 123', '7654321', '3101234567', 'nueva.bogota@autorenta.com');
+select * from Sucursal;
 
--- procedimientos vehiculos
 -- Registrar Vehículo
-DELIMITER //
-CREATE PROCEDURE registrar_vehiculo (
-    IN p_tipo_vehiculo VARCHAR(50),
-    IN p_placa VARCHAR(20),
-    IN p_referencia VARCHAR(100),
-    IN p_modelo YEAR,
-    IN p_puertas INT,
-    IN p_capacidad INT,
-    IN p_sunroof BOOLEAN,
-    IN p_motor VARCHAR(50),
-    IN p_color VARCHAR(50)
+-- aqui el empleado podra registrar un vehiculo
+delimiter //
+create procedure registrar_vehiculo (
+    in p_tipo_vehiculo varchar(50),
+    in p_placa varchar(20),
+    in p_referencia varchar(100),
+    in p_modelo year,
+    in p_puertas int,
+    in p_capacidad int,
+    in p_sunroof boolean,
+    in p_motor varchar(50),
+    in p_color varchar(50)
 )
-BEGIN
-    INSERT INTO Vehiculo (tipo_vehiculo, placa, referencia, modelo, puertas, capacidad, sunroof, motor, color)
-    VALUES (p_tipo_vehiculo, p_placa, p_referencia, p_modelo, p_puertas, p_capacidad, p_sunroof, p_motor, p_color);
-END //
-DELIMITER ;
+begin
+    insert into Vehiculo (tipo_vehiculo, placa, referencia, modelo, puertas, capacidad, sunroof, motor, color)
+    values (p_tipo_vehiculo, p_placa, p_referencia, p_modelo, p_puertas, p_capacidad, p_sunroof, p_motor, p_color);
+end //
+delimiter ;
+call registrar_vehiculo('Sedan', 'ABC123', 'Toyota Corolla', 2020, 4, 5, 0, '1.8L', 'Rojo');
 
 -- Actualizar Vehículo
-DELIMITER //
-CREATE PROCEDURE actualizar_vehiculo (
-    IN p_id_vehiculo INT,
-    IN p_tipo_vehiculo VARCHAR(50),
-    IN p_placa VARCHAR(20),
-    IN p_referencia VARCHAR(100),
-    IN p_modelo YEAR,
-    IN p_puertas INT,
-    IN p_capacidad INT,
-    IN p_sunroof BOOLEAN,
-    IN p_motor VARCHAR(50),
-    IN p_color VARCHAR(50)
+-- aqui el empleado podra actualizar un vehiculo
+delimiter //
+create procedure actualizar_vehiculo (
+    in p_id_vehiculo int,
+    in p_tipo_vehiculo varchar(50),
+    in p_placa varchar(20),
+    in p_referencia varchar(100),
+    in p_modelo year,
+    in p_puertas int,
+    in p_capacidad int,
+    in p_sunroof boolean,
+    in p_motor varchar(50),
+    in p_color varchar(50)
 )
-BEGIN
-    UPDATE Vehiculo
-    SET tipo_vehiculo = p_tipo_vehiculo,
+begin
+    update Vehiculo
+    set tipo_vehiculo = p_tipo_vehiculo,
         placa = p_placa,
         referencia = p_referencia,
         modelo = p_modelo,
@@ -82,47 +91,53 @@ BEGIN
         sunroof = p_sunroof,
         motor = p_motor,
         color = p_color
-    WHERE id_vehiculo = p_id_vehiculo;
-END //
-DELIMITER ;
+    where id_vehiculo = p_id_vehiculo;
+end //
+delimiter ;
+call actualizar_vehiculo(101, 'SUV', 'DEF456', 'Toyota RAV4', 2021, 5, 7, 1, '2.5L', 'Negro');
+select * from Vehiculo where id_vehiculo = 101;
 
--- procedimientos empleados
+-- procedimientos administrador
 -- Registrar Empleado
-DELIMITER //
-CREATE PROCEDURE registrar_empleado (
-    IN p_id_sucursal INT,
-    IN p_cedula VARCHAR(20),
-    IN p_nombre VARCHAR(100),
-    IN p_apellido1 VARCHAR(100),
-    IN p_apellido2 VARCHAR(100),
-    IN p_direccion VARCHAR(200),
-    IN p_ciudad_residencia VARCHAR(100),
-    IN p_celular VARCHAR(20),
-    IN p_correo_electronico VARCHAR(100)
+-- Aqui en administrador prodar registrar a un nuevo dato de algun empleado
+delimiter //
+create procedure registrar_empleado (
+    in p_id_sucursal int,
+    in p_cedula varchar(20),
+    in p_nombre varchar(100),
+    in p_apellido1 varchar(100),
+    in p_apellido2 varchar(100),
+    in p_direccion varchar(200),
+    in p_ciudad_residencia varchar(100),
+    in p_celular varchar(20),
+    in p_correo_electronico varchar(100)
 )
-BEGIN
-    INSERT INTO Empleado (id_sucursal, cedula, nombre, apellido1, apellido2, direccion, ciudad_residencia, celular, correo_electronico)
-    VALUES (p_id_sucursal, p_cedula, p_nombre, p_apellido1, p_apellido2, p_direccion, p_ciudad_residencia, p_celular, p_correo_electronico);
-END //
-DELIMITER ;
+begin
+    insert into Empleado (id_sucursal, cedula, nombre, apellido1, apellido2, direccion, ciudad_residencia, celular, correo_electronico)
+    values (p_id_sucursal, p_cedula, p_nombre, p_apellido1, p_apellido2, p_direccion, p_ciudad_residencia, p_celular, p_correo_electronico);
+end //
+delimiter ;
+call registrar_empleado(1, '1234567890', 'Juan', 'Pérez', 'González', 'calle 123 #45-67', 'Bogotá', '3007654321', 'juan.perez@autorenta.com');
+select * from Empleado where id_sucursal = 1;
 
 -- Actualizar Empleado
-DELIMITER //
-CREATE PROCEDURE actualizar_empleado (
-    IN p_id_empleado INT,
-    IN p_id_sucursal INT,
-    IN p_cedula VARCHAR(20),
-    IN p_nombre VARCHAR(100),
-    IN p_apellido1 VARCHAR(100),
-    IN p_apellido2 VARCHAR(100),
-    IN p_direccion VARCHAR(200),
-    IN p_ciudad_residencia VARCHAR(100),
-    IN p_celular VARCHAR(20),
-    IN p_correo_electronico VARCHAR(100)
+-- Aqui en administrador prodar actualizar cualquier dato de algun empleado
+delimiter //
+create procedure actualizar_empleado (
+    in p_id_empleado int,
+    in p_id_sucursal int,
+    in p_cedula varchar(20),
+    in p_nombre varchar(100),
+    in p_apellido1 varchar(100),
+    in p_apellido2 varchar(100),
+    in p_direccion varchar(200),
+    in p_ciudad_residencia varchar(100),
+    in p_celular varchar(20),
+    in p_correo_electronico varchar(100)
 )
-BEGIN
-    UPDATE Empleado
-    SET id_sucursal = p_id_sucursal,
+begin
+    update Empleado
+    set id_sucursal = p_id_sucursal,
         cedula = p_cedula,
         nombre = p_nombre,
         apellido1 = p_apellido1,
@@ -131,120 +146,125 @@ BEGIN
         ciudad_residencia = p_ciudad_residencia,
         celular = p_celular,
         correo_electronico = p_correo_electronico
-    WHERE id_empleado = p_id_empleado;
-END //
-DELIMITER ;
+    where id_empleado = p_id_empleado;
+end //
+delimiter ;
+call actualizar_empleado(101, 1, '0987654321', 'María', 'López', 'Ramírez', 'calle 789 #10-11', 'Medellín', '3107654321', 'maria.lopez@autorenta.com');
+select * from Empleado where id_sucursal = 1;
 
 -- procedimientos clientes
--- Consulta de Disponibilidad de Vehículos
-DELIMITER //
-CREATE PROCEDURE consultar_disponibilidad_vehiculos (
-    IN tipo_vehiculo VARCHAR(50),
-    IN precio_min DECIMAL(10, 2),
-    IN precio_max DECIMAL(10, 2),
-    IN fecha_inicio DATE,
-    IN fecha_fin DATE
-)
-BEGIN
-    SELECT v.*
-    FROM Vehiculo v
-    WHERE v.tipo_vehiculo = tipo_vehiculo
-      AND v.id_vehiculo NOT IN (
-          SELECT a.id_vehiculo
-          FROM Alquiler a
-          WHERE (a.fecha_salida BETWEEN fecha_inicio AND fecha_fin)
-             OR (a.fecha_llegada BETWEEN fecha_inicio AND fecha_fin)
-             OR (fecha_inicio BETWEEN a.fecha_salida AND a.fecha_llegada)
-             OR (fecha_fin BETWEEN a.fecha_salida AND a.fecha_llegada)
-      )
-      AND EXISTS (
-          SELECT 1
-          FROM Alquiler a2
-          WHERE a2.id_vehiculo = v.id_vehiculo
-            AND a2.valor_alquiler_semana BETWEEN precio_min AND precio_max
-      );
-END //
-DELIMITER ;
 
-CALL consultar_disponibilidad_vehiculos('sedán', 200.00, 500.00, '2024-07-01', '2024-07-10');
+-- Consulta de Disponibilidad de Vehículos
+-- aqui el cliente podra ver la disponibilidad de los vehiculos
+delimiter //
+create procedure consultar_disponibilidad_vehiculos (
+    in tipo_vehiculo varchar(50),
+    in precio_min decimal(10, 2),
+    in precio_max decimal(10, 2),
+    in fecha_inicio date,
+    in fecha_fin date
+)
+begin
+    select v.*
+    from Vehiculo v
+    where v.tipo_vehiculo = tipo_vehiculo
+      and v.id_vehiculo not in (
+          select a.id_vehiculo
+          from Alquiler a
+          where (a.fecha_salida between fecha_inicio and fecha_fin)
+             or (a.fecha_llegada between fecha_inicio and fecha_fin)
+             or (fecha_inicio between a.fecha_salida and a.fecha_llegada)
+             or (fecha_fin between a.fecha_salida and a.fecha_llegada)
+      )
+      and exists (
+          select 1
+          from Alquiler a2
+          where a2.id_vehiculo = v.id_vehiculo
+            and a2.valor_alquiler_semana between precio_min and precio_max
+      );
+end //
+delimiter ;
+call consultar_disponibilidad_vehiculos('sedán', 200.00, 500.00, '2024-07-01', '2024-07-10');
 
 -- Consulta de Historial de Alquileres
-DELIMITER //
-CREATE FUNCTION historial_alquileres (cliente_id INT) 
-RETURNS TEXT DETERMINISTIC
-BEGIN
-    DECLARE resultado TEXT;
-    SELECT
-        GROUP_CONCAT(
-            CONCAT(
+-- aqui podra ver el historial de alquileres el cliente
+delimiter //
+create function historial_alquileres (cliente_id int) 
+returns text deterministic
+begin
+    declare resultado text;
+    select
+        GROUP_ConCAT(
+            ConCAT(
                 'Alquiler ID: ', a.id_alquiler,
                 ', Fecha Salida: ', a.fecha_salida,
                 ', Fecha Llegada: ', a.fecha_llegada,
                 ', Vehículo: ', v.placa,
                 ', Empleado: ', e.nombre,
                 ', Valor Cotizado: ', a.valor_cotizado
-            ) SEPARATOR '\n'
-        ) INTO resultado
-    FROM Alquiler a
-    JOIN Vehiculo v ON a.id_vehiculo = v.id_vehiculo
-    JOIN Empleado e ON a.id_empleado = e.id_empleado
-    WHERE a.id_cliente = cliente_id;
-    IF resultado IS NULL THEN
-        SET resultado = 'No se encontraron alquileres para este cliente.';
-    END IF;
-    RETURN resultado;
-END //
-DELIMITER ;
+            ) separator '\n'
+        ) into resultado
+    from Alquiler a
+    join Vehiculo v on a.id_vehiculo = v.id_vehiculo
+    join Empleado e on a.id_empleado = e.id_empleado
+    where a.id_cliente = cliente_id;
+    if resultado is null then
+        set resultado = 'No se encontraron alquileres para este cliente.';
+    end if;
+    return resultado;
+end //
+delimiter ;
 select historial_alquileres(1);
 
 -- Alquiar de Vehículos
-DELIMITER //
-CREATE PROCEDURE registrar_alquiler (
-    IN p_id_vehiculo INT,
-    IN p_id_cliente INT,
-    IN p_id_empleado INT,
-    IN p_id_sucursal_salida INT,
-    IN p_id_sucursal_llegada INT,
-    IN p_fecha_salida DATE,
-    IN p_fecha_llegada DATE,
-    IN p_fecha_esperada_llegada DATE,
-    IN p_valor_alquiler_semana DECIMAL(10, 2),
-    IN p_valor_alquiler_dia DECIMAL(10, 2),
-    IN p_porcentaje_descuento DECIMAL(5, 2),
-    IN p_valor_cotizado DECIMAL(10, 2),
-    IN p_valor_pagado DECIMAL(10, 2)
+-- en este procedimiento que es para los clientes
+-- el cliente registrara un alquiler
+delimiter //
+create procedure registrar_alquiler (
+    in p_id_vehiculo int,
+    in p_id_cliente int,
+    in p_id_empleado int,
+    in p_id_sucursal_salida int,
+    in p_id_sucursal_llegada int,
+    in p_fecha_salida date,
+    in p_fecha_llegada date,
+    in p_fecha_esperada_llegada date,
+    in p_valor_alquiler_semana decimal(10, 2),
+    in p_valor_alquiler_dia decimal(10, 2),
+    in p_porcentaje_descuento decimal(5, 2),
+    in p_valor_cotizado decimal(10, 2),
+    in p_valor_pagado decimal(10, 2)
 )
-BEGIN
-    DECLARE EXIT HANDLER FOR SQLEXCEPTION
-    BEGIN
-        ROLLBACK;
-        SELECT 'Su alquiler fallo.' AS message;
-    END;
+begin
+    declare exit Handler for sqlexception
+    begin
+        rollback;
+        select 'Su alquiler fallo.' as message;
+    end;
 
-    START TRANSACTION;
+    START transaction;
 
-    INSERT INTO Alquiler (
+    insert into Alquiler (
         id_vehiculo, id_cliente, id_empleado, id_sucursal_salida, id_sucursal_llegada,
         fecha_salida, fecha_llegada, fecha_esperada_llegada,
         valor_alquiler_semana, valor_alquiler_dia, porcentaje_descuento,
         valor_cotizado, valor_pagado
-    ) VALUES (
+    ) values (
         p_id_vehiculo, p_id_cliente, p_id_empleado, p_id_sucursal_salida, p_id_sucursal_llegada,
         p_fecha_salida, p_fecha_llegada, p_fecha_esperada_llegada,
         p_valor_alquiler_semana, p_valor_alquiler_dia, p_porcentaje_descuento,
         p_valor_cotizado, p_valor_pagado
     );
 
-    COMMIT;
+    commit;
 
-    SELECT 'Su alquiler fue exitoso.' AS message;
-END //
-DELIMITER ;
-CALL registrar_alquiler(1, 1, 1, 1, 2, '2024-07-01', '2024-07-08', '2024-07-07', 150.00, 25.00, 5.00, 200.00, 200.00);
-SELECT * FROM Alquiler
-WHERE id_vehiculo = 1
-  AND id_cliente = 1
-  AND fecha_salida = '2024-07-01'
-  AND fecha_llegada = '2024-07-08';
+    select 'Su alquiler fue exitoso.' AS message;
+end //
+delimiter ;
+call registrar_alquiler(1, 1, 1, 1, 2, '2024-07-01', '2024-07-08', '2024-07-07', 150.00, 25.00, 5.00, 200.00, 200.00);
+select * from Alquiler
+where id_vehiculo = 1
+  and id_cliente = 1
+  and fecha_salida = '2024-07-01'
+  and fecha_llegada = '2024-07-08';
 
--- procedimientos para cliente sirve falta el resto
